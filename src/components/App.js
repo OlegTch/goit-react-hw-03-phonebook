@@ -64,7 +64,27 @@ class App extends React.Component {
     alert(message);
   };
 
+  componentDidMount() {
+    const contacts = localStorage.getItem("contacts");
+    const parsedContacts = JSON.parse(contacts);
+
+    if (parsedContacts.length > 0) {
+      console.log(parsedContacts, "parsedContacts");
+      this.setState({ contacts: parsedContacts });
+    } else {
+      console.log("phonebook was empty, returned base contacts");
+      this.setState({ contacts: dataContacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+    }
+  }
+
   render() {
+    console.log("App render");
     const filteredContacts = this.getFilteredContacts();
 
     return (
