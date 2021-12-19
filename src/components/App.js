@@ -68,12 +68,13 @@ class App extends React.Component {
     const contacts = localStorage.getItem("contacts");
     const parsedContacts = JSON.parse(contacts);
 
-    if (parsedContacts.length) {
+    if (parsedContacts) {
       this.setState({ contacts: parsedContacts });
       console.log(parsedContacts, "parsedContacts");
-    } else {
-      console.log("phonebook was empty, returned base contacts");
-      this.setState({ contacts: dataContacts });
+      if (parsedContacts.length === 0) {
+        console.log("phonebook was empty, returned base contacts");
+        this.setState({ contacts: dataContacts });
+      }
     }
   }
 
